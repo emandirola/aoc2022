@@ -1,4 +1,4 @@
-#! /usr/bin/env sh
+#! /usr/bin/env bash
 
 while getopts "d:fp" opt; do
     case "$opt" in
