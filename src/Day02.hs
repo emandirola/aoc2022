@@ -1,6 +1,8 @@
 module Day02 where
 import Text.Printf (printf)
 import Debug.Trace
+import Data.List (findIndex, elemIndex)
+import Data.Maybe (fromJust)
 
 points them us =
     let
@@ -13,7 +15,7 @@ points them us =
     in p + us' + 1
 
 play (them, us) = points them us
-
+wins a x = Just x == a `lookup` zip ['A'..'C'] ['Y', 'Z', 'X']
 points2 (them, result) =
     let
         them' = fromEnum them - fromEnum 'A'
@@ -23,10 +25,21 @@ points2 (them, result) =
           | result == 'Z' = (them' + 1) `mod` 3 + 6
     in p + 1
 
-day02part1 input =
-    let parsed = map (\(f:_:s) -> (f, head s)) $ lines input
-    in show $ sum $ map play parsed
+rotate n xs = uncurry (flip (++)) $ (n `mod` length xs) `splitAt` xs
 
-day02part2 input =
-    let parsed = map (\(f:_:s) -> (f, head s)) $ lines input
-    in show $ sum $ map points2 parsed
+roundPoints p@(_, x) = handPoints + resultPoints
+    where
+        handPoints = ((fromJust (x `elemIndex` us) - 1) `mod` 3) + 1
+        resultPoints = (index `div` 3) * 3
+        index = fromJust $ p `elemIndex` all
+        all = zip them us
+        them = cycle ['A', 'B', 'C']
+        us = concatMap (`rotate` ['X', 'Y', 'Z']) [-1..1]
+
+preRead = map (\(f:_:s) -> (f, head s)) . lines
+
+day02part1 :: [(Char, Char)] -> String
+day02part1 = show . sum . map play
+
+day02part2 :: [(Char, Char)] -> String
+day02part2 = show . sum . map points2

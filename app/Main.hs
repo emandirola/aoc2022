@@ -1,6 +1,6 @@
 module Main where
 
-import Day01 (day01)
+import Day09 (day09part2)
 import Paths_aoc2022 ( getDataFileName )
 import System.Environment (getArgs)
 
@@ -9,7 +9,5 @@ getFolder _ = "src/inputs/"
 
 main :: IO ()
 main = do
-  args <- getArgs
-  let folder = getFolder args
-  ls <- readFile =<< getDataFileName (folder ++ "day01.txt")
-  day01 $ unlines $ drop 2 $ lines ls
+  let a = day09part2 []
+  print a

@@ -7,6 +7,11 @@ if [[ "$day" == "" ]]; then
 fi
 day0=$(printf "%02d" $day)
 
+if [[ -e "./src/inputs/day${day0}.txt" ]]; then
+    echo "Day already created"
+    exit 2
+fi
+
 touch ./src/inputs/day${day0}.txt
 
 cat > ./test/inputs/day${day0}.txt << EOF
@@ -23,6 +28,8 @@ module Day$day0 (
         day${day0}part2
     ) where
 
+preRead = id
+
 day${day0}part1 = _
 
 day${day0}part2 = "<expected part2>" --this way we can test only part1
@@ -30,13 +37,14 @@ EOF
 
 cat > ./test/Day${day0}Test.hs << EOF
 module Main where
-import TestUtils (doTest)
+import TestUtils (doTest')
 import Day${day0} (
         day${day0}part1,
-        day${day0}part2
+        day${day0}part2,
+        preRead
     )
 
-main = doTest $day [
+main = doTest' $day preRead [
         day${day0}part1,
         day${day0}part2
     ]
