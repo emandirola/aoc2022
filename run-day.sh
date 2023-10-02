@@ -6,10 +6,11 @@ while getopts "d:fp" opt; do
             day="$OPTARG"
             ;;
         f)
-            full='--ta "full"'
+            ta="$ta full"
             ;;
         p)
-            profile='--profile'
+            profile='--profile --library-profiling'
+            ta="$ta +RTS -s -hd -RTS"
             ;;
     esac
 done
@@ -19,4 +20,4 @@ if [[ -z "$day" ]]; then
 fi
 day=$(printf ':day%02d-test' "$day")
 
-stack test $day $profile $full
+stack test "$day" $profile --ta "$ta"

@@ -30,6 +30,8 @@ library
         Day06,
         Day07,
         Day08,
+        Day09,
+        Day10,
     hs-source-dirs: src
 
 executable aoc2022
@@ -46,6 +48,7 @@ common tests-common
     other-modules: Paths_aoc2022, TestUtils
     hs-source-dirs:   test
     build-depends: base ^>=4.17.2.0, HUnit ^>=1.6.2.0, aoc2022
+    ghc-options: -fprof-auto -fprof-cafs -funbox-strict-fields -O2
 
 test-suite tests
     import: tests-common
@@ -91,3 +94,13 @@ test-suite day08-test
     import: tests-common
     type: exitcode-stdio-1.0
     main-is: Day08Test.hs
+
+test-suite day09-test
+    import: tests-common
+    type: exitcode-stdio-1.0
+    main-is: Day09Test.hs
+
+test-suite day10-test
+    import: tests-common
+    type: exitcode-stdio-1.0
+    main-is: Day10Test.hs
