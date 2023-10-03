@@ -25,7 +25,8 @@ EOF
 cat > ./src/Day${day0}.hs << EOF
 module Day$day0 (
         day${day0}part1,
-        day${day0}part2
+        day${day0}part2,
+        preRead
     ) where
 
 preRead = id
