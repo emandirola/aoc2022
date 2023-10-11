@@ -23,9 +23,7 @@ cat > ./test/inputs/day${day0}.txt << EOF
 EOF
 
 cat > ./src/Day${day0}.hs << EOF
-module Day${day0} (part1, part2, parser) where
-
-parser = id
+module Day${day0} (part1, part2) where
 
 part1 = undefined
 
@@ -36,8 +34,8 @@ cat > ./test/Day${day0}Spec.hs << EOF
 module Day${day0} where
 import TestUtils (doTestHspec)
 import Test.Hspec (Spec)
-import Day${day0} (part1, part2, parser)
+import Day${day0} (part1, part2)
 
 spec :: Spec
-spec = doTestHspec $day parser [part1, part2]
+spec = doTestHspec $day id [part1, part2]
 EOF
