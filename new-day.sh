@@ -31,7 +31,7 @@ part2 = undefined
 EOF
 
 cat > ./test/Day${day0}Spec.hs << EOF
-module Day${day0} where
+module Day${day0}Spec where
 import TestUtils (doTestHspec)
 import Test.Hspec (Spec)
 import Day${day0} (part1, part2)
