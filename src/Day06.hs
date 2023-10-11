@@ -3,9 +3,9 @@ import Data.List (zip4, nub, findIndex)
 import Debug.Trace (traceShowId)
 import Data.Maybe (fromJust)
 
-day06part1 = findMatching 4
+part1 = findMatching 4
 
-day06part2 = findMatching 14
+part2 = findMatching 14
 
 findMatching l input = go
     where

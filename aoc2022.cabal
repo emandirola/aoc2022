@@ -1,106 +1,94 @@
-cabal-version:      3.0
-name:               aoc2022
-version:            0.1.0.0
-synopsis:
+cabal-version: 1.12
 
-homepage: https://
+-- This file has been generated from package.yaml by hpack version 0.35.2.
+--
+-- see: https://github.com/sol/hpack
 
-license:            NONE
-author:             Tebi
-maintainer:
+name:           aoc2022
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/emandirola/aoc2022#readme>
+homepage:       https://github.com/emandirola/aoc2022#readme
+bug-reports:    https://github.com/emandirola/aoc2022/issues
+author:         Tebi
+license:        GNU-3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
 
--- A copyright notice.
--- copyright:
-category:           Development
-extra-source-files: CHANGELOG.md
-data-files: test/inputs/*.txt, src/inputs/*.txt
-
-common libraries
+source-repository head
+  type: git
+  location: https://github.com/emandirola/aoc2022
 
 library
-    default-language: Haskell2010
-    build-depends:    base ^>=4.17.2.0
-    other-modules: Paths_aoc2022
-    exposed-modules:
-        Day01,
-        Day02,
-        Day03,
-        Day04,
-        Day05,
-        Day06,
-        Day07,
-        Day08,
-        Day09,
-        Day10,
-    hs-source-dirs: src
+  exposed-modules:
+      Day01
+      Day02
+      Day03
+      Day04
+      Day05
+      Day06
+      Day07
+      Day08
+      Day09
+      Day10
+      Day11
+      Utils
+  other-modules:
+      Paths_aoc2022
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -fprof-auto -fprof-cafs -funbox-strict-fields
+  build-depends:
+      HUnit
+    , attoparsec
+    , base >=4.17 && <5
+    , bytestring
+    , hspec
+  default-language: Haskell2010
 
-executable aoc2022
-    main-is:          Main.hs
-    build-depends:
-        base ^>=4.17.2.0,
-        aoc2022
-    other-modules: Paths_aoc2022
-    hs-source-dirs:   app
-    default-language: Haskell2010
+executable aoc2022-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_aoc2022
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -fprof-auto -fprof-cafs -funbox-strict-fields -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      HUnit
+    , aoc2022
+    , attoparsec
+    , base >=4.17 && <5
+    , bytestring
+    , hspec
+  default-language: Haskell2010
 
-common tests-common
-    default-language: Haskell2010
-    other-modules: Paths_aoc2022, TestUtils
-    hs-source-dirs:   test
-    build-depends: base ^>=4.17.2.0, HUnit ^>=1.6.2.0, aoc2022
-    ghc-options: -fprof-auto -fprof-cafs -funbox-strict-fields -O2
-
-test-suite tests
-    import: tests-common
-    type:             exitcode-stdio-1.0
-    main-is:          Tests.hs
-
-test-suite day01-test
-    import: tests-common
-    type:             exitcode-stdio-1.0
-    main-is:          Day01Test.hs
-
-test-suite day02-test
-    import: tests-common
-    type:             exitcode-stdio-1.0
-    main-is:          Day02Test.hs
-
-test-suite day03-test
-    import: tests-common
-    type:             exitcode-stdio-1.0
-    main-is:          Day03Test.hs
-
-test-suite day04-test
-    import: tests-common
-    type:             exitcode-stdio-1.0
-    main-is:          Day04Test.hs
-
-test-suite day05-test
-    import: tests-common
-    type:             exitcode-stdio-1.0
-    main-is:          Day05Test.hs
-
-test-suite day06-test
-    import: tests-common
-    type:             exitcode-stdio-1.0
-    main-is:          Day06Test.hs
-
-test-suite day07-test
-    import: tests-common
-    type: exitcode-stdio-1.0
-    main-is: Day07Test.hs
-
-test-suite day08-test
-    import: tests-common
-    type: exitcode-stdio-1.0
-    main-is: Day08Test.hs
-
-test-suite day09-test
-    import: tests-common
-    type: exitcode-stdio-1.0
-    main-is: Day09Test.hs
-
-test-suite day10-test
-    import: tests-common
-    type: exitcode-stdio-1.0
-    main-is: Day10Test.hs
+test-suite aoc2022-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Day01Spec
+      Day02Spec
+      Day03Spec
+      Day04Spec
+      Day05Spec
+      Day06Spec
+      Day07Spec
+      Day08Spec
+      Day09Spec
+      Day10Spec
+      Day11Spec
+      TestUtils
+      Paths_aoc2022
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -fprof-auto -fprof-cafs -funbox-strict-fields -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      HUnit
+    , aoc2022
+    , attoparsec
+    , base >=4.17 && <5
+    , bytestring
+    , hspec
+  default-language: Haskell2010

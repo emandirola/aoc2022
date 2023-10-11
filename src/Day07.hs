@@ -1,25 +1,17 @@
- {-# LANGUAGE MultiWayIf, BangPatterns, GADTs, NamedFieldPuns, NumericUnderscores #-}
+ {-# LANGUAGE MultiWayIf, GADTs, NamedFieldPuns, NumericUnderscores #-}
  module Day07 (
-        day07part1,
-        day07part2
+        part1,
+        part2
     ) where
-import Data.List (isPrefixOf, stripPrefix, unfoldr, findIndex, sortOn)
-import Data.Foldable (find)
-import Data.Maybe (fromJust, mapMaybe, catMaybes, fromMaybe)
-import Control.Arrow (second, Arrow (first, second))
+import Data.List (isPrefixOf, unfoldr, sortOn)
+import Control.Arrow (second, Arrow (second))
 import Data.Char (isSpace)
 import Data.Tuple (swap)
-import Debug.Trace (traceShowId, trace, traceShow, traceId)
-import Control.Monad (liftM2, ap)
-import Control.Applicative (liftA, Applicative (liftA2))
-import Data.Functor (($>))
 import Text.Printf (printf)
 import Data.Bifunctor (bimap)
 import GHC.Base (join)
-import GHC.OldList (elemIndex)
 
 type Size = Int
-type Depth = Int
 type Name = String
 --data Tree = Folder Name Int [Tree] | File Name Int deriving (Show)
 data Node where
@@ -81,11 +73,11 @@ chooseTrees p = go
 
 res = head . parseInput' . lines
 
-day07part1 input = show $ sum $ map size $ chooseTrees ((< 100_000) . size) res'
+part1 input = show $ sum $ map size $ chooseTrees ((< 100_000) . size) res'
     where
         res' = res input
 
-day07part2 input = show $ size chosen
+part2 input = show $ size chosen
     where
         res' = res input
         used = size res'

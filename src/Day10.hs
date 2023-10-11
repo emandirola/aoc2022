@@ -1,21 +1,15 @@
-module Day10 (
-        day10part1,
-        day10part2,
-        preRead
-    ) where
-import Data.List (foldl', scanl')
+module Day10 (part1, part2) where
+import Data.List (foldl')
 import Data.Char (isNumber)
-import Text.Printf (printf)
 import Data.Maybe (fromMaybe)
 import GHC.Base ((<|>))
-import Debug.Trace (traceId)
+import Prelude hiding (cycle)
 
-preRead = lines
-
+third :: (a, b, c) -> c
 third (_, _, t) = t
 
-day10part1 :: [String] -> String
-day10part1 = show . third . foldl' f (0, 1, 0)
+part1 :: String -> String
+part1 = show . third . foldl' f (0::Int, 1::Int, 0::Int) . lines
     where
         step cycle x strength = if shouldCount (cycle + 1) then Just $ strength + (cycle + 1) * x else Nothing
         shouldCount cycle = (cycle - 20) `mod` 40 == 0
@@ -23,8 +17,8 @@ day10part1 = show . third . foldl' f (0, 1, 0)
         f (cycle, x, strength) instr = (cycle + 2, x + dx, fromMaybe strength $ step (cycle+1) x strength <|> step cycle x strength)
             where dx = read $ dropWhile (not . (\x -> x == '-' || isNumber x)) instr
 
-day10part2 :: [String] -> String
-day10part2 = show . traceId . ('\n':) . print40 . reverse . third . foldl' f (1, 1, "")
+part2 :: String -> String
+part2 = ('\n':) . print40 . reverse . third . foldl' f (1::Int, 1::Int, "") . lines
     where
         print40 [] = ""
         print40 xs = h ++ "\n" ++ print40 t

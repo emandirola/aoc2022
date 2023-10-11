@@ -14,9 +14,9 @@ import Text.Read (readMaybe)
 type Stacks = [String]
 type Move = [Int]
 
-day05part1 = gogogo True
+part1 = gogogo True
 
-day05part2 = gogogo False
+part2 = gogogo False
 
 gogogo :: Bool -> String -> String
 gogogo reversed input = map fst $ mapMaybe uncons $ go stacks moves

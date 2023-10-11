@@ -38,8 +38,6 @@ roundPoints p@(_, x) = handPoints + resultPoints
 
 preRead = map (\(f:_:s) -> (f, head s)) . lines
 
-day02part1 :: [(Char, Char)] -> String
-day02part1 = show . sum . map play
+part1 = show . sum . map play . preRead
 
-day02part2 :: [(Char, Char)] -> String
-day02part2 = show . sum . map points2
+part2 = show . sum . map points2 . preRead

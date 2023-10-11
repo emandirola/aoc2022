@@ -13,13 +13,13 @@ parse line = (a, b, c, d)
             | c == '-' = ','
             | otherwise = c
 
-day04part1 input = show $ sum $ map (fromEnum . go) $ lines input
+part1 input = show $ sum $ map (fromEnum . go) $ lines input
     where
         go line = ((a >= c) && (b <= d)) || ((c >= a) && (d <= b))
             where
                 (a, b, c, d) = parse line
 
-day04part2 input = show $ sum $ map (fromEnum . go) $ lines input
+part2 input = show $ sum $ map (fromEnum . go) $ lines input
     where
         go line = c <= b || b >= c
             where

@@ -1,16 +1,10 @@
-module Day01 (day01, day01part1, day01part2, preRead) where
-import Paths_aoc2022 (getDataFileName)
-import Data.List (sort, unfoldr, uncons, sortOn)
-import qualified Data.Ord
+module Day01 (day01, part1, part2, preRead) where
+import Data.List (unfoldr, uncons)
 import Data.Ord (comparing)
 import GHC.OldList (sortBy, foldl')
 import GHC.Exts (Down(Down))
-import Data.Maybe (mapMaybe, isJust, fromJust, catMaybes, isNothing)
+import Data.Maybe (isJust, fromJust, catMaybes, isNothing)
 import Text.Read (readMaybe)
-import GHC.Base (liftA)
-import Data.Bifunctor (bimap)
-import Control.Monad (join)
-import Debug.Trace (traceShowId)
 
 parse :: [Maybe Int] -> [[Int]]
 parse [] = []
@@ -45,12 +39,12 @@ sums input n =
 preRead :: String -> [Maybe Int]
 preRead input = map readMaybe $ lines input
 
-day01part1 input = show $ maximum $ sums input 1
+part1 input = show $ maximum $ sums (preRead input) 1
 
-day01part2 input = show $ sum $ take 3 $ sortBy (comparing Down) (sums input 3)
+part2 input = show $ sum $ take 3 $ sortBy (comparing Down) (sums (preRead input) 3)
 
 day01 input = do
     print "Day 01 part 1"
-    print $ day01part1 input
+    print $ part1 input
     print "Day 01 part 2"
-    print $ day01part2 input
+    print $ part2 input

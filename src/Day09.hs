@@ -2,8 +2,8 @@
 {-# LANGUAGE ParallelListComp #-}
 {-# LANGUAGE MultiWayIf #-}
 module Day09 (
-        day09part1,
-        day09part2,
+        part1,
+        part2,
         preRead
     ) where
 import Data.Char (isSpace)
@@ -88,8 +88,6 @@ makeMoves tails = res
         scanned = scanl' makeMove initial
         initial = (replicate (tails + 1) (0, 0), [(0, 0)])
 
-day09part1 :: [Move] -> String
-day09part1 = makeMoves 1
+part1 = makeMoves 1 . preRead
 
-day09part2 :: [Move] -> String
-day09part2 = makeMoves 9
+part2 = makeMoves 9 . preRead

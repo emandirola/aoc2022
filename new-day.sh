@@ -23,41 +23,21 @@ cat > ./test/inputs/day${day0}.txt << EOF
 EOF
 
 cat > ./src/Day${day0}.hs << EOF
-module Day$day0 (
-        day${day0}part1,
-        day${day0}part2,
-        preRead
-    ) where
+module Day${day0} (part1, part2, parser) where
 
-preRead = id
+parser = id
 
-day${day0}part1 = _
+part1 = undefined
 
-day${day0}part2 = "<expected part2>" --this way we can test only part1
+part2 = undefined
 EOF
 
-cat > ./test/Day${day0}Test.hs << EOF
-module Main where
-import TestUtils (doTest')
-import Day${day0} (
-        day${day0}part1,
-        day${day0}part2,
-        preRead
-    )
+cat > ./test/Day${day0}Spec.hs << EOF
+module Day${day0} where
+import TestUtils (doTestHspec)
+import Test.Hspec (Spec)
+import Day${day0} (part1, part2, parser)
 
-main = doTest' $day preRead [
-        day${day0}part1,
-        day${day0}part2
-    ]
+spec :: Spec
+spec = doTestHspec $day parser [part1, part2]
 EOF
-
-cat >> ./aoc2022.cabal << EOF
-
-test-suite day${day0}-test
-    import: tests-common
-    type: exitcode-stdio-1.0
-    main-is: Day${day0}Test.hs
-EOF
-
-sed -i "/^\s*Day${day0},\s*$/d" aoc2022.cabal
-sed -i "s/.*hs-source-dirs: src.*/        Day${day0},\n&/" aoc2022.cabal

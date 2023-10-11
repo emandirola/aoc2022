@@ -2,13 +2,12 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE BangPatterns #-}
 module Day08 (
-        day08part1,
-        day08part2,
+        part1,
+        part2,
         readInput
     ) where
 import Data.List ( nub, sort, transpose, uncons, find, findIndices )
 import GHC.OldList (foldl')
-import Data.Function (on)
 import Data.Maybe (isNothing)
 import Control.Arrow (Arrow(second))
 import Data.Char (ord)
@@ -47,18 +46,19 @@ readInput input = map (map (flip (-) (ord '0') . ord)) $ lines input -- read es 
 inputToTree :: [[Int]] -> [[Tree]]
 inputToTree = zipWith (flip zipWith [0..] . Tree) [0..]
 
-day08part1 input = show $ length all
+part1 input = show $ length all
   where
-    (_, _, all) = seenTrees input
+    (_, _, all) = seenTrees $ readInput input
 
-day08part2 input = show found
+part2 input = show found
   where
-    size = length input - 1
+    input' = readInput input
+    size = length input' - 1
     tree x y = trees !! y !! x
-    trees = inputToTree input
+    trees = inputToTree input'
     treest = transpose trees
     isSafe t = inRange (1, size) `all` [x t, y t]
-    (_, _, all') = seenTrees input
+    (_, _, all') = seenTrees input'
     found = maximum [go t | t <- all', isSafe t]
     fixedSpan p xs = second (maybeTail' []) $ p `span` xs
     maybeHead' n = maybe n fst . uncons

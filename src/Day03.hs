@@ -36,5 +36,5 @@ take3 inputs
         where
             (x:y:z:xs) = inputs
 
-day03part1 input = show $ sum $ map solve1 $ lines input
-day03part2 input = show $ sum $ map solve2 $ take3 $ lines input
+part1 input = show $ sum $ map solve1 $ lines input
+part2 input = show $ sum $ map solve2 $ take3 $ lines input
