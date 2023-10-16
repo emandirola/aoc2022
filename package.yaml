@@ -24,6 +24,12 @@ dependencies:
 - bytestring
 - attoparsec
 - HUnit
+- extra
+- timeit
+- unordered-containers
+- pqueue
+- vector
+- hashable
 
 ghc-options:
 - -Wall

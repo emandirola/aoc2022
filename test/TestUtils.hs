@@ -10,7 +10,6 @@ import qualified Data.Attoparsec.ByteString.Char8 as A
 import qualified Data.ByteString.Char8 as BS
 import Test.Hspec ( Spec, runIO, it, shouldBe, pendingWith )
 import Utils
-import Debug.Trace (traceShowId)
 
 doTestHspec :: forall a b c. (ConvertBS a, ConvertBS b) => Int -> (a -> c) -> [c -> b] -> Spec
 doTestHspec day parser tests = do
@@ -33,9 +32,9 @@ readInput day parser = do
 parseInput :: (ConvertBS a, ConvertBS i) => i -> ([a], a)
 parseInput bs = (map fromByteString e, fromByteString i)
   where
-    (e, i) = Debug.Trace.traceShowId $ case go bs of
-              Left str -> error str
-              Right r -> r
+    (e, i) = case go bs of
+      Left str -> error str
+      Right r -> r
     go = A.parseOnly strParser . toByteString
     strParser = do
       expecteds <- A.many1 expecteds'

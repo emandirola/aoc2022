@@ -34,6 +34,7 @@ library
       Day09
       Day10
       Day11
+      Day12
       Utils
   other-modules:
       Paths_aoc2022
@@ -45,7 +46,13 @@ library
     , attoparsec
     , base >=4.17 && <5
     , bytestring
+    , extra
+    , hashable
     , hspec
+    , pqueue
+    , timeit
+    , unordered-containers
+    , vector
   default-language: Haskell2010
 
 executable aoc2022-exe
@@ -61,7 +68,13 @@ executable aoc2022-exe
     , attoparsec
     , base >=4.17 && <5
     , bytestring
+    , extra
+    , hashable
     , hspec
+    , pqueue
+    , timeit
+    , unordered-containers
+    , vector
   default-language: Haskell2010
 
 test-suite aoc2022-test
@@ -79,6 +92,7 @@ test-suite aoc2022-test
       Day09Spec
       Day10Spec
       Day11Spec
+      Day12Spec
       TestUtils
       Paths_aoc2022
   hs-source-dirs:
@@ -90,5 +104,11 @@ test-suite aoc2022-test
     , attoparsec
     , base >=4.17 && <5
     , bytestring
+    , extra
+    , hashable
     , hspec
+    , pqueue
+    , timeit
+    , unordered-containers
+    , vector
   default-language: Haskell2010
