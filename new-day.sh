@@ -39,3 +39,9 @@ import Day${day0} (part1, part2)
 spec :: Spec
 spec = doTestHspec $day id [part1, part2]
 EOF
+
+last_import=$(grep -n "import Day" app/Main.hs | tail -n 1 | cut -d: -f1)
+sed -i "${last_import} a\import Day${day0}" app/Main.hs
+
+last_part=$(grep -n ", Part" app/Main.hs | tail -n 1 | cut -d: -f1)
+sed -i "${last_part} a\    , Part Day${day0}.part1, Part Day${day0}.part2" app/Main.hs

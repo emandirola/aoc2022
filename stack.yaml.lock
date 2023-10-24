@@ -3,39 +3,11 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
-packages:
-- completed:
-    hackage: bytestring-0.11.5.2@sha256:446ad0a558ee7efcb0aeebfe147bf3897c50241231a9131ff7d7d24f2c3c1f2f,7595
-    pantry-tree:
-      sha256: b51508ffad643fbb973d16af2bc58ad7a34d00c3926fa0e9a56058f0f989a066
-      size: 4019
-  original:
-    hackage: bytestring-0.11.5.2
-- completed:
-    hackage: attoparsec-0.14.4@sha256:6a193f133311af59ce5a0c2fc4bd9574c222794f5d772bc4cf4ffa6e73d2581f,5679
-    pantry-tree:
-      sha256: 5cfbb9a1236e07a73632862677a519223a76dcff6c5e82217fbd97f30b78b879
-      size: 5039
-  original:
-    hackage: attoparsec-0.14.4
-- completed:
-    hackage: text-2.0.2@sha256:71b5fa8c64d3c1fd0a08f993463220867b08290a2256e94b0952bf0e8f5a45cc,9905
-    pantry-tree:
-      sha256: 25f3b6dd211e30f9e0ef5047bb9f30df7a9296cf1043873e31558196dfe78676
-      size: 7514
-  original:
-    hackage: text-2.0.2
-- completed:
-    hackage: binary-0.8.9.1@sha256:81f468c1c75fd6535152ab69b2d32ac6cfcc03e345267b069abe4da56ec95801,6523
-    pantry-tree:
-      sha256: 956ecd662408f69615977b87a92e042abcdc447b7824b8aabf5788c4393c10c5
-      size: 1976
-  original:
-    hackage: binary-0.8.9.1
+packages: []
 snapshots:
 - completed:
-    sha256: 8017c7970c2a8a9510c60cc70ac245d59e0c34eb932b91d37af09fe59855d854
-    size: 640038
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/21/13.yaml
+    sha256: 9450cb7197cfbba29995cccd552adaaac4f4e67a3fe987822fabe8136b675e9a
+    size: 695329
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2023/10/17.yaml
   original:
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/21/13.yaml
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2023/10/17.yaml

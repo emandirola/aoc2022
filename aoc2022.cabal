@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.35.2.
+-- This file has been generated from package.yaml by hpack version 0.36.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -35,6 +35,8 @@ library
       Day10
       Day11
       Day12
+      Day13
+      Day14
       Utils
   other-modules:
       Paths_aoc2022
@@ -44,7 +46,7 @@ library
   build-depends:
       HUnit
     , attoparsec
-    , base >=4.17 && <5
+    , base >=4.19 && <5
     , bytestring
     , extra
     , hashable
@@ -66,7 +68,7 @@ executable aoc2022-exe
       HUnit
     , aoc2022
     , attoparsec
-    , base >=4.17 && <5
+    , base >=4.19 && <5
     , bytestring
     , extra
     , hashable
@@ -93,6 +95,8 @@ test-suite aoc2022-test
       Day10Spec
       Day11Spec
       Day12Spec
+      Day13Spec
+      Day14Spec
       TestUtils
       Paths_aoc2022
   hs-source-dirs:
@@ -102,7 +106,7 @@ test-suite aoc2022-test
       HUnit
     , aoc2022
     , attoparsec
-    , base >=4.17 && <5
+    , base >=4.19 && <5
     , bytestring
     , extra
     , hashable
