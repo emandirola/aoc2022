@@ -1,6 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE NamedFieldPuns #-}
-{-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
 module Day14 (part1, part2) where
 import qualified Data.ByteString.Char8 as BS
 import qualified Data.Attoparsec.ByteString.Char8 as A
@@ -8,7 +7,6 @@ import Data.Either (fromRight)
 import Data.HashSet (HashSet)
 import qualified Data.HashSet as HS
 import Data.List.Extra (chunksOf)
-import Data.List (sort)
 
 data Path = Path {
     minX :: Int,
@@ -28,8 +26,8 @@ parsePath = fromRight undefined . A.parseOnly path
         vec xs = HS.unions $ zipWith fill xs (tail xs)
         fill (x1, y1) (x2, y2) = HS.fromList [(x, y) | x <- [minX..maxX], y <- [minY..maxY]]
             where
-                [minX, maxX] = sort [x1, x2]
-                [minY, maxY] = sort [y1, y2]
+                (minX, maxX) = (min x1 x2, max x1 x2)
+                (minY, maxY) = (min y1 y2, max y1 y2)
         toPath xs =
             let
                 min' = minimum $ map fst xs
