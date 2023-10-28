@@ -23,6 +23,7 @@ import Day11
 import Day12
 import Day13
 import Day14
+import Day15
 
 data Part = forall a b. (ConvertBS a, ConvertBS b) => Part (a -> b)
 parts :: [Part]
@@ -41,6 +42,7 @@ parts = [
     , Part Day12.part1, Part Day12.part2
     , Part Day13.part1, Part Day13.part2
     , Part Day14.part1, Part Day14.part2
+    , Part Day15.part1, Part Day15.part2
   ]
 
 main :: IO ()
