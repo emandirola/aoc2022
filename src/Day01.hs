@@ -1,50 +1,22 @@
-module Day01 (day01, part1, part2, preRead) where
-import Data.List (unfoldr, uncons)
+module Day01 (part1, part2, preRead) where
 import Data.Ord (comparing)
-import GHC.OldList (sortBy, foldl')
+import GHC.OldList (sortBy)
 import GHC.Exts (Down(Down))
-import Data.Maybe (isJust, fromJust, catMaybes, isNothing)
-import Text.Read (readMaybe)
+import qualified Data.Attoparsec.ByteString.Char8 as A
+import qualified Data.ByteString.Char8 as BS
+import Data.Either.Extra (eitherToMaybe)
+import Data.Maybe (isJust, catMaybes)
 
-parse :: [Maybe Int] -> [[Int]]
-parse [] = []
-parse calories =
-    let
-        (elf,ws) = break isNothing calories
-        ws' = drop 1 ws
-    in catMaybes elf:parse ws'
+sums :: [Maybe Int] -> [Int]
+sums [] = []
+sums (Nothing:is) = sums is
+sums is = sum (catMaybes $ takeWhile isJust is) : sums (dropWhile isJust is)
 
-parse2 :: [Maybe Int] -> [Int]
-parse2 input = concat $ unfoldr
-    (\lines -> ((\ (a, b) -> Just ([sum $ catMaybes a], snd `fmap` uncons b)) . span isJust) =<< lines)
-    (Just input)
+preRead :: BS.ByteString -> [Maybe Int]
+preRead input = map (eitherToMaybe . A.parseOnly A.decimal) (BS.lines input)
 
-parse3 :: Int -> [Maybe Int] -> [Int]
-parse3 n input = (\(m, s) -> [sum $ take n $ sortBy (comparing Down) $ s:m]) $ foldl'
-    (\(maxis, sum') current ->
-        let
-            maxis' = take n $ sortBy (comparing Down) $ sum':maxis
-        in if isNothing current then (maxis', 0) else (maxis, sum' + fromJust current)
-    )
-    ([], 0)
-    input
+part1 :: BS.ByteString -> String
+part1 input = show $ maximum $ sums (preRead input)
 
-sums :: [Maybe Int] -> Int -> [Int]
-sums input n =
-    let ps = map sum $ parse input
-        ps' = parse2 input
-        ps'' = parse3 n input
-    in ps''
-
-preRead :: String -> [Maybe Int]
-preRead input = map readMaybe $ lines input
-
-part1 input = show $ maximum $ sums (preRead input) 1
-
-part2 input = show $ sum $ take 3 $ sortBy (comparing Down) (sums (preRead input) 3)
-
-day01 input = do
-    print "Day 01 part 1"
-    print $ part1 input
-    print "Day 01 part 2"
-    print $ part2 input
+part2 :: BS.ByteString -> String
+part2 input = show $ sum $ take 3 $ sortBy (comparing Down) (sums (preRead input))
