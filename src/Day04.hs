@@ -1,26 +1,26 @@
-module Day04 where
-import Text.Printf (printf)
-import Debug.Trace (traceShowId)
-import Data.List (sortBy)
-import Data.Ord (comparing)
+{-# LANGUAGE OverloadedStrings #-}
+module Day04 (part1, part2) where
+import qualified Data.Attoparsec.ByteString.Char8 as A
+import qualified Data.ByteString.Char8 as BS
+import Data.Either (fromRight)
 
-parse line = (a, b, c, d)
+parse :: BS.ByteString -> (Int, Int, Int, Int)
+parse = fromRight undefined . A.parseOnly ranges
     where
-        f = takeWhile (/=',') line
-        s = drop (length f + 1) line
-        [(a, b), (c, d)] = sortBy (comparing fst) $ map (read . printf "(%s)" . map repl) [f, s] :: [(Int, Int)]
-        repl c
-            | c == '-' = ','
-            | otherwise = c
+        ranges = l2t <$> range `A.sepBy` ","
+        range = A.decimal `A.sepBy` "-"
+        l2t [[a, b], [c, d]] = (a, b, c, d)
+        l2t _ = undefined
 
-part1 input = show $ sum $ map (fromEnum . go) $ lines input
+part1 :: BS.ByteString -> String
+part1 input = show $ sum $ map (fromEnum . go) $ BS.lines input
     where
         go line = ((a >= c) && (b <= d)) || ((c >= a) && (d <= b))
             where
                 (a, b, c, d) = parse line
-
-part2 input = show $ sum $ map (fromEnum . go) $ lines input
+part2 :: BS.ByteString -> String
+part2 input = show $ sum $ map (fromEnum . go) $ BS.lines input
     where
         go line = c <= b || b >= c
             where
-                (a, b, c, d) = parse line
+                (_, b, c, _) = parse line
