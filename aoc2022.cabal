@@ -31,6 +31,7 @@ library
       Day06
       Day07
       Day08
+      Day082
       Day09
       Day10
       Day11
@@ -49,9 +50,11 @@ library
     , attoparsec
     , base >=4.19 && <5
     , bytestring
+    , deepseq
     , extra
     , hashable
     , hspec
+    , matrix
     , pqueue
     , timeit
     , unordered-containers
@@ -71,9 +74,11 @@ executable aoc2022-exe
     , attoparsec
     , base >=4.19 && <5
     , bytestring
+    , deepseq
     , extra
     , hashable
     , hspec
+    , matrix
     , pqueue
     , timeit
     , unordered-containers
@@ -110,9 +115,11 @@ test-suite aoc2022-test
     , attoparsec
     , base >=4.19 && <5
     , bytestring
+    , deepseq
     , extra
     , hashable
     , hspec
+    , matrix
     , pqueue
     , timeit
     , unordered-containers

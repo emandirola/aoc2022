@@ -1,19 +1,11 @@
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE FlexibleInstances, MultiParamTypeClasses, InstanceSigs, RankNTypes #-}
 module Utils where
 
-import qualified Data.ByteString.Char8 as BS
+class Show a => ToList a where
+  toList :: a -> [String]
 
-class ConvertBS a where
-  toByteString :: a -> BS.ByteString
-  fromByteString :: BS.ByteString -> a
+instance Show a => ToList [a] where
+  toList = map show
 
-instance ConvertBS String where
-  toByteString = BS.pack
-  fromByteString = BS.unpack
-
-instance ConvertBS BS.ByteString where
-  toByteString = id
-  fromByteString :: BS.ByteString -> BS.ByteString
-  fromByteString = id
+instance Show a => ToList (a, a) where
+  toList (x, y) = [show x, show y]

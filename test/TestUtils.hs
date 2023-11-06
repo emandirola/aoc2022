@@ -6,38 +6,26 @@
 {-# LANGUAGE OverloadedStrings #-}
 module TestUtils (parseInput, readInput, doTestHspec) where
 import Text.Printf (printf)
-import qualified Data.Attoparsec.ByteString.Char8 as A
-import qualified Data.ByteString.Char8 as BS
-import Test.Hspec ( Spec, runIO, it, shouldBe, pendingWith )
 import Utils
+import Test.Hspec ( Spec, runIO, it, shouldBe, pendingWith )
+import Data.List.Extra (splitOn)
+import Data.List (isPrefixOf)
+import Control.Monad
 
-doTestHspec :: forall a b c. (ConvertBS a, ConvertBS b) => Int -> (a -> c) -> [c -> b] -> Spec
-doTestHspec day parser tests = do
-  (expecteds, input) <- runIO $ readInput day parser
-  mapM_ (\((part, fn), expected) ->
-    it ("Part " ++ show part) $ do
-      let expected' = BS.strip $ toByteString expected
-      if "<expected" `BS.isPrefixOf` expected' then
-        pendingWith "TODO"
-      else
-        BS.strip (toByteString (fn input)) `shouldBe` BS.strip (toByteString expected)
-    ) $ zip (zip [1::Int ..] tests) expecteds
+doTestHspec :: ToList a => Int -> (String -> a) -> Spec
+doTestHspec day test = do
+  (expecteds, input) <- runIO $ readInput day
+  let [part1, part2] = Utils.toList $ test input
+  it ("Part 1") $ do
+    show part1 `shouldBe` show (expecteds !! 0)
+  if length expecteds > 1 then
+    it "part 2" $ do
+      show part2 `shouldBe` show (expecteds !! 1)
+  else
+    return ()
 
-readInput :: (ConvertBS b) => Int -> (b -> c) -> IO ([b], c)
-readInput day parser = do
-  rawInput <- BS.readFile (printf "test/inputs/day%02d.txt" day)
-  let (expecteds, input) = parser `fmap` parseInput rawInput
-  return (expecteds, input)
+readInput :: Int -> IO ([String], String)
+readInput day = parseInput <$> readFile (printf "test/inputs/day%02d.txt" day)
 
-parseInput :: (ConvertBS a, ConvertBS i) => i -> ([a], a)
-parseInput bs = (map fromByteString e, fromByteString i)
-  where
-    (e, i) = case go bs of
-      Left str -> error str
-      Right r -> r
-    go = A.parseOnly strParser . toByteString
-    strParser = do
-      expecteds <- A.many1 expecteds'
-      input <- A.takeByteString
-      return (map (BS.intercalate "\n") expecteds, input)
-    expecteds' = A.manyTill (A.takeWhile (/= '\n') <* A.endOfLine) (A.string "-----" *> A.endOfLine)
+parseInput :: String -> ([String], String)
+parseInput = ((,) <$> init <*> last) . splitOn "\n-----\n"

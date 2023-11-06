@@ -4,4 +4,4 @@ import TestUtils (doTestHspec)
 import Test.Hspec (Spec)
  
 spec :: Spec
-spec = doTestHspec 1 id [part1, part2]
+spec = doTestHspec 1 day01

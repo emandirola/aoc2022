@@ -1,12 +1,9 @@
 {-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE ImpredicativeTypes #-}
-{-# LANGUAGE OverloadedStrings #-}
 module Main (main) where
 
 import System.Environment (getArgs)
 import Text.Printf (printf)
-import Utils
-import qualified Data.ByteString.Char8 as BS
 import System.TimeIt (timeItNamed)
 import GHC.IO (evaluate)
 import Day01
@@ -24,44 +21,52 @@ import Day12
 import Day13
 import Day14
 import Day15
+import System.CPUTime (getCPUTime)
+import Control.Monad (join)
+import Control.DeepSeq (NFData(rnf), deepseq)
+import Data.Bifunctor (first)
 
-data Part = forall a b. (ConvertBS a, ConvertBS b) => Part (a -> b)
-parts :: [Part]
-parts = [
-      Part Day01.part1, Part Day01.part2
-    , Part Day02.part1, Part Day02.part2
-    , Part Day03.part1, Part Day03.part2
-    , Part Day04.part1, Part Day04.part2
-    , Part Day05.part1, Part Day05.part2
-    , Part Day06.part1, Part Day06.part2
-    , Part Day07.part1, Part Day07.part2
-    , Part Day08.part1, Part Day08.part2
-    , Part Day09.part1, Part Day09.part2
-    , Part Day10.part1, Part Day10.part2
-    , Part Day11.part1, Part Day11.part2
-    , Part Day12.part1, Part Day12.part2
-    , Part Day13.part1, Part Day13.part2
-    , Part Day14.part1, Part Day14.part2
-    , Part Day15.part1, Part Day15.part2
+data Day = forall a. (Show a, NFData a) => Day (String -> a)
+days :: [Day]
+days = [
+      Day day01
+    --, Day day02
+    {-
+    , [Part Day03.part1, Part Day03.part2]
+    , [Part Day04.part1, Part Day04.part2]
+    , [Part Day05.part1, Part Day05.part2]
+    , [Part Day06.part1, Part Day06.part2]
+    , [Part Day07.part1, Part Day07.part2]
+    , [Part Day08.part1, Part Day08.part2]
+    , [Part Day09.part1, Part Day09.part2]
+    , [Part Day10.part1, Part Day10.part2]
+    , [Part Day11.part1, Part Day11.part2]
+    , [Part Day12.part1, Part Day12.part2]
+    , [Part Day13.part1, Part Day13.part2]
+    , [Part Day14.part1, Part Day14.part2]
+    , [Part Day15.part1, Part Day15.part2]
+  -}
   ]
 
 main :: IO ()
 main = do
   args <- getArgs
-  let days = if null args then [1..length parts `div` 2] else [read $ head args]
-  let parts' = if length args < 2 then [1, 2] else [read (args !! 1)]
-  let indexes = concat [[(day - 1) * 2, (day - 1) * 2 + 1] | day <- days]
-  sequence_ ([callPart part d p | index <- indexes, let d = index `div` 2 + 1, let p = index `mod` 2 + 1, let part = parts !! index, p `elem` parts'])
-
-callPart :: Part -> Int -> Int -> IO ()
-callPart (Part f) day part = do
-  input <- Main.readInput day
-  result <- timeItNamed label $ evaluate $ f input
-  let result' = toByteString result
-  putStrLn $ printf "%s: %s" label . BS.unpack $ result'
+  let days' = if null args then [1..length days] else [read $ head args]
+  mapM_ (uncurry runDay) (filter ((`elem` days') . snd) (zip days [1..]))
+  --sequence_ ([callPart part d p | index <- indexes, let d = index `div` 2 + 1, let p = index `mod` 2 + 1, let part = parts !! index, p `elem` parts'])
   where
-    label :: String
-    label = printf "Day %d Part %d" day part
+    times :: [(Int, String)]
+    times = [(0, "us"), (3, "ms"), (6, "s")]
+    toTime :: Double -> String
+    toTime d = head $ map (uncurry (printf "%0.3f %s")) $ filter ((>0) . fst) $ map (first $ (d/) . (10^)) times
+    runDay (Day f) n = do
+      start <- getCPUTime
+      res <- join $ evaluate $ f <$> Main.readInput n
+      let res' = rnf res `deepseq` res
+      end <- getCPUTime
+      let diff = fromIntegral (end - start) / (10^(6 :: Int)) :: Double
+      printf "Day %d: %s\n" n $ toTime diff
+      print res'
 
-readInput :: (ConvertBS a) => Int -> IO a
-readInput day = fromByteString `fmap` BS.readFile (printf "src/inputs/day%02d.txt" day)
+readInput :: Int -> IO String
+readInput day = readFile (printf "src/inputs/day%02d.txt" day)
