@@ -5,23 +5,10 @@ module Main (main) where
 import System.Environment (getArgs)
 import Text.Printf (printf)
 import GHC.IO (evaluate)
-import Day01
-import Day02
-import Day03
-import Day04
-import Day05
-import Day06
-import Day07
-import Day08
-import Day09
-import Day10
-import Day11
-import Day12
-import Day13
-import Day14
-import Day15
+import Day01 (day01)
+import Day02 (day02)
+import Day03 (day03)
 import System.CPUTime (getCPUTime)
-import Control.Monad (join)
 import Control.DeepSeq (NFData(rnf), deepseq)
 import Data.Bifunctor (first)
 
