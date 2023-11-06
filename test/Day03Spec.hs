@@ -4,4 +4,4 @@ import Day03
 import Test.Hspec (Spec)
 
 spec :: Spec
-spec = pure () -- doTestHspec 3 day03
+spec = doTestHspec 3 day03

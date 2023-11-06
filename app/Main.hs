@@ -30,21 +30,7 @@ days :: [Day]
 days = [
       Day day01
     , Day day02
-    {-
-    , [Part Day03.part1, Part Day03.part2]
-    , [Part Day04.part1, Part Day04.part2]
-    , [Part Day05.part1, Part Day05.part2]
-    , [Part Day06.part1, Part Day06.part2]
-    , [Part Day07.part1, Part Day07.part2]
-    , [Part Day08.part1, Part Day08.part2]
-    , [Part Day09.part1, Part Day09.part2]
-    , [Part Day10.part1, Part Day10.part2]
-    , [Part Day11.part1, Part Day11.part2]
-    , [Part Day12.part1, Part Day12.part2]
-    , [Part Day13.part1, Part Day13.part2]
-    , [Part Day14.part1, Part Day14.part2]
-    , [Part Day15.part1, Part Day15.part2]
-  -}
+    , Day day03
   ]
 
 main :: IO ()
@@ -52,15 +38,15 @@ main = do
   args <- getArgs
   let days' = if null args then [1..length days] else [read $ head args]
   mapM_ (uncurry runDay) (filter ((`elem` days') . snd) (zip days [1..]))
-  --sequence_ ([callPart part d p | index <- indexes, let d = index `div` 2 + 1, let p = index `mod` 2 + 1, let part = parts !! index, p `elem` parts'])
   where
     times :: [(Int, String)]
     times = [(0, "us"), (3, "ms"), (6, "s")]
     toTime :: Double -> String
     toTime d = head $ map (uncurry (printf "%0.3f %s")) $ filter ((>0) . fst) $ map (first $ (d/) . (10^)) times
     runDay (Day f) n = do
+      input <- Main.readInput n
       start <- getCPUTime
-      res <- join $ evaluate $ f <$> Main.readInput n
+      res <- evaluate $ f input
       let res' = rnf res `deepseq` res
       end <- getCPUTime
       let diff = fromIntegral (end - start) / (10^(6 :: Int)) :: Double
