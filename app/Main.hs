@@ -4,7 +4,6 @@ module Main (main) where
 
 import System.Environment (getArgs)
 import Text.Printf (printf)
-import System.TimeIt (timeItNamed)
 import GHC.IO (evaluate)
 import Day01
 import Day02
@@ -30,7 +29,7 @@ data Day = forall a. (Show a, NFData a) => Day (String -> a)
 days :: [Day]
 days = [
       Day day01
-    --, Day day02
+    , Day day02
     {-
     , [Part Day03.part1, Part Day03.part2]
     , [Part Day04.part1, Part Day04.part2]

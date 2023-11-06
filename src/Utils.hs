@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleInstances, MultiParamTypeClasses, InstanceSigs, RankNTypes #-}
+{-# LANGUAGE FlexibleInstances #-}
 module Utils where
 
 class Show a => ToList a where
